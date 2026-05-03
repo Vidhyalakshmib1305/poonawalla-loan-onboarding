@@ -1,1 +1,4 @@
+/* All styles are handled in App.jsx via GLOBAL_CSS constant */
+* { box-sizing: border-box; }
+body { margin: 0; }
 
