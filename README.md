@@ -206,12 +206,12 @@ First Docker build takes 5 to 10 minutes — it downloads Whisper and DeepFace m
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│                   React 18 Frontend                   │
-│         11-screen SPA · Nginx · Port 3000             │
+│                   React 18 Frontend                  │
+│         11-screen SPA · Nginx · Port 3000            │
 └────────────────────────┬─────────────────────────────┘
                          │  REST API
 ┌────────────────────────▼─────────────────────────────┐
-│                  FastAPI Backend                      │
+│                  FastAPI Backend                     │
 │               Python 3.11 · Port 8000                │
 ├──────────────┬──────────────┬──────────┬─────────────┤
 │   Routes     │   Services   │  Models  │   Infra     │
