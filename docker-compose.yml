@@ -1,0 +1,89 @@
+# ── Poonawalla Fincorp AI Loan Onboarding ────────────────────────────────
+# Dev:   docker-compose up --build
+# Prod:  docker-compose up -d --build
+#
+# Production checklist (set before deploying):
+#   1. Set DOMAIN below to your actual domain (e.g. poonawallafincorp.com)
+#   2. Replace REACT_APP_API_URL with your real backend URL
+#   3. Add SSL certs in ./nginx/certs/ (or use Traefik/Certbot)
+#   4. Set strong SECRET_KEY in backend/.env
+
+services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pfl_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - pfl_data:/app/data
+      - ./backend/.env:/app/.env:ro
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_PATH=/app/data/audit.db
+    networks:
+      - pfl_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+        reservations:
+          memory: 512m
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # IMPORTANT: Change this to your real backend URL before production deploy
+        # For local dev: http://localhost:8000
+        # For production: https://api.yourdomain.com
+        - REACT_APP_API_URL=${REACT_APP_API_URL:-http://localhost:8000}
+    container_name: pfl_frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - pfl_network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+        reservations:
+          memory: 64m
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+volumes:
+  pfl_data:
+    name: pfl_sqlite_data
+
+networks:
+  pfl_network:
+    driver: bridge
