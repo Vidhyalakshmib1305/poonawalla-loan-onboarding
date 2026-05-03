@@ -60,9 +60,9 @@ Traditional loan onboarding requires physical branch visits, manual document sub
 ## Screenshots
 
 <p align="center">
-  <img src="docs/screenshot1.png" width="45%" alt="Landing Page"/>
+  <img src="frontend/docs/screenshot1.png" width="45%" alt="Landing Page"/>
   &nbsp;&nbsp;
-  <img src="docs/screenshot2.png" width="45%" alt="Video KYC Screen"/>
+  <img src="frontend/docs/screenshot2.png" width="45%" alt="Video KYC Screen"/>
 </p>
 
 ---
@@ -255,7 +255,29 @@ loan-onboarding/
 ├── .gitignore
 └── README.md
 ```
-
+## Tech Stack
+ 
+<p align="center">
+  <img src="frontend/public/images/tech_stack.png" width="80%" alt="Tech Stack Diagram"/>
+</p>
+**Frontend**
+- React.js (Single Page Application) + Web Speech API + MediaRecorder API
+- Nginx (Production-grade web server)
+**Backend**
+- Python 3.11 + FastAPI
+- SQLite (audit logging via `audit.db`)
+**AI / ML Services**
+- Face verification (`face_service.py`) — DeepFace Facenet512 + CLAHE preprocessing
+- Speech-to-text (`stt_service.py`) — OpenAI Whisper base model
+- LLM document analysis (`llm_service.py`) — Groq llama-3.3-70b-versatile
+- Credit risk engine (`risk_engine.py`) — FOIR, LTV, CIBIL simulation
+- Bureau integration (`bureau_service.py`) — Simulated CIBIL with real distribution
+- Document processing (`document_service.py`) — Groq Vision llama-4-scout + Tesseract OCR
+- KFS generation (`kfs_service.py`) — RBI Key Facts Statement with APR
+- Application summary (`summary_service.py`) — HTML summary + status email
+**Infrastructure**
+- Docker + Docker Compose
+- Multi-container orchestration (backend + frontend containers)
 ---
 
 ## Supported Loan Products (14 Types)
@@ -289,4 +311,4 @@ loan-onboarding/
 
 ---
 
-Built with love for **TenzorX 2026 — National AI Hackathon** by Poonawalla Fincorp.
+Built with ❤️ for **TenzorX 2026 — National AI Hackathon** by Poonawalla Fincorp.
