@@ -260,12 +260,15 @@ loan-onboarding/
 <p align="center">
   <img src="frontend/public/images/tech_stack.png" width="80%" alt="Tech Stack Diagram"/>
 </p>
+
 **Frontend**
 - React.js (Single Page Application) + Web Speech API + MediaRecorder API
 - Nginx (Production-grade web server)
+  
 **Backend**
 - Python 3.11 + FastAPI
 - SQLite (audit logging via `audit.db`)
+  
 **AI / ML Services**
 - Face verification (`face_service.py`) — DeepFace Facenet512 + CLAHE preprocessing
 - Speech-to-text (`stt_service.py`) — OpenAI Whisper base model
@@ -275,9 +278,11 @@ loan-onboarding/
 - Document processing (`document_service.py`) — Groq Vision llama-4-scout + Tesseract OCR
 - KFS generation (`kfs_service.py`) — RBI Key Facts Statement with APR
 - Application summary (`summary_service.py`) — HTML summary + status email
+  
 **Infrastructure**
 - Docker + Docker Compose
 - Multi-container orchestration (backend + frontend containers)
+  
 ---
 
 ## Supported Loan Products (14 Types)
